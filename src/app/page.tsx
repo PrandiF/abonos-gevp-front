@@ -18,7 +18,7 @@ export default function page() {
     }
   }, [isLoggedIn, router]);
   return (
-    <div>
+    <div className="w-[30%]">
       <Head>
         <link rel="manifest" href="/manifest.json" />
       </Head>

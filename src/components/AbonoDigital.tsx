@@ -51,6 +51,16 @@ export default function AbonoDigital() {
     fetchAbono();
   }, [id]);
 
+  const formatDate = (date: string | Date) => {
+    if (!date) return "";
+
+    const dateStr =
+      typeof date === "string" ? date : date.toISOString().split("T")[0]; // yyyy-mm-dd
+
+    const [year, month, day] = dateStr.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
   if (loading) return <p className="p-6 text-center">Cargando abono...</p>;
   if (error) return <p className="p-6 text-center text-red-500">{error}</p>;
   if (!abono) return <p className="p-6 text-center">Abono no encontrado ❌</p>;
@@ -74,7 +84,9 @@ export default function AbonoDigital() {
             <div className="flex flex-col text-white">
               <h2 className="text-2xl  font-bold">{abono.nombre}</h2>
               <p className="xl:text-sm text-lg">DNI: {abono.dni}</p>
-              <p className="xl:text-sm text-lg">Válido hasta: {abono.vence}</p>
+              <p className="xl:text-sm text-lg">
+                Válido hasta: {formatDate(abono.vence)}
+              </p>
             </div>
 
             <div className="flex items-center xl:justify-end">

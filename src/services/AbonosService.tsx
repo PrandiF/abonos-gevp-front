@@ -2,7 +2,11 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5001/api/abonos"; // ajusta si tu backend usa otro prefijo
 
-export const createAbono = async (nombre: string, dni: string, vence: Date) => {
+export const createAbono = async (
+  nombre: string,
+  dni: string,
+  vence: string
+) => {
   try {
     const res = await axios.post(
       `${API_URL}/`,

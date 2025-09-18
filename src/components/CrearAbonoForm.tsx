@@ -14,7 +14,7 @@ import { createAbono } from "../services/AbonosService";
 export default function NuevoAbono() {
   const [nombre, setNombre] = useState("");
   const [dni, setDni] = useState("");
-  const [vence, setVence] = useState("");
+  const [vence, setVence] = useState(""); // sigue siendo string "yyyy-mm-dd"
   const [mensaje, setMensaje] = useState("");
   const { isLoggedIn } = useAuthStore();
 
@@ -22,21 +22,24 @@ export default function NuevoAbono() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      AOS.init({ once: true }); // 'once: true' evita animaciones repetidas al hacer scroll
+      AOS.init({ once: true });
     }
   }, []);
+
   useEffect(() => {
     if (mensaje) {
       const timer = setTimeout(() => setMensaje(""), 3000);
-      return () => clearTimeout(timer); // limpiar si se desmonta o cambia
+      return () => clearTimeout(timer);
     }
   }, [mensaje]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setMensaje(""); // limpiar mensaje previo
+    setMensaje("");
 
     try {
-      const res = await createAbono(nombre, dni, new Date(vence)); // 👈 usamos el service
+      // 👈 enviamos vencimiento como string directamente
+      const res = await createAbono(nombre, dni, vence);
       setMensaje("Abono creado correctamente ✅");
       setNombre("");
       setDni("");
@@ -48,14 +51,19 @@ export default function NuevoAbono() {
     }
   };
 
+  // Función helper para mostrar fechas en dd/mm/yyyy
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "";
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <>
       {isLoggedIn ? (
         <div className="flex flex-col h-screen w-full ">
-          {/* Header */}
           <Header />
 
-          {/* Contenido (ocupa espacio sobrante) */}
           <main className="flex-1 flex flex-col items-center justify-start gap-8 p-6 relative">
             <button
               onClick={() => router.back()}
@@ -134,7 +142,6 @@ export default function NuevoAbono() {
             </div>
           </main>
 
-          {/* Footer */}
           <Footer />
         </div>
       ) : (

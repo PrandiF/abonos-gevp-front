@@ -51,6 +51,16 @@ export default function QrStatus() {
     fetchAbono();
   }, [id]);
 
+  const formatDate = (date: string | Date) => {
+    if (!date) return "";
+
+    const dateStr =
+      typeof date === "string" ? date : date.toISOString().split("T")[0]; // yyyy-mm-dd
+
+    const [year, month, day] = dateStr.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
   if (loading) return <p className="text-center">Cargando...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!abono) return <p className="text-center">Abono no encontrado ❌</p>;
@@ -74,8 +84,12 @@ export default function QrStatus() {
         <p className="text-lg font-medium">{abono.nombre}</p>
         <p className="text-sm text-gray-600">
           {esValido
-            ? `Vence: ${new Date(abono.vence).toLocaleDateString("es-AR")}`
-            : `Venció: ${new Date(abono.vence).toLocaleDateString("es-AR")}`}
+            ? `Vence: ${new Date(formatDate(abono.vence)).toLocaleDateString(
+                "es-AR"
+              )}`
+            : `Venció: ${new Date(formatDate(abono.vence)).toLocaleDateString(
+                "es-AR"
+              )}`}
         </p>
       </div>
     </div>

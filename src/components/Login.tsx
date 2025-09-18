@@ -41,7 +41,7 @@ export default function Login() {
 
   return (
     <div
-      className=" bg-white/40 backdrop-blur-sm rounded-2xl shadow-xl p-8 flex flex-col "
+      className=" bg-white/70 backdrop-blur-sm rounded-2xl shadow-xl p-8 flex flex-col "
       data-aos="fade"
       data-aos-duration="1200"
       data-aos-delay="300"

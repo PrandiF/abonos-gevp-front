@@ -51,6 +51,12 @@ export default function ListarAbonos() {
     fetchAbonos();
   }, []);
 
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "";
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
+
   if (loading) return <p className="p-4">Cargando abonos...</p>;
 
   const abonosFiltrados = abonos.filter(
@@ -163,7 +169,9 @@ export default function ListarAbonos() {
                               {abono.nombre}
                             </td>
                             <td className="px-2 xl:px-4 py-3">{abono.dni}</td>
-                            <td className="px-2 xl:px-4 py-3">{abono.vence}</td>
+                            <td className="px-2 xl:px-4 py-3">
+                              {formatDate(abono.vence)}
+                            </td>
                             <td className="hidden xl:table-cell px-2 xl:px-4 py-3">
                               <Link href={`/abonos/${abono.id}`}>
                                 <button className="text-blue-500 hover:underline cursor-pointer">

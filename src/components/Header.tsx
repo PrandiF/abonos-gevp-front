@@ -68,7 +68,7 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
       </div>
 
       {/* Center: Logo */}
-      <div className="absolute left-1/2  xl:top-1 -translate-x-1/2">
+      <div className="absolute left-1/2  -translate-x-1/2">
         <Image src={escudoGevp} alt="Escudo GEVP" height={54} />
       </div>
 
