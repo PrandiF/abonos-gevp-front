@@ -47,19 +47,19 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
         {/* Desktop Menu (oculto en mobile) */}
         <div className="hidden sm:flex gap-6 text-lg">
           <button
-            className="hover:underline"
+            className="hover:underline cursor-pointer hover:text-gray-200"
             onClick={() => router.push("/home")}
           >
             Inicio
           </button>
           <button
-            className="hover:underline"
+            className="hover:underline cursor-pointer hover:text-gray-200"
             onClick={() => router.push("/abonos/nuevo")}
           >
             Crear Abono
           </button>
           <button
-            className="hover:underline"
+            className="hover:underline cursor-pointer hover:text-gray-200"
             onClick={() => router.push("/abonos/listar")}
           >
             Todos los Abonos
@@ -75,11 +75,13 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
       {/* Right: Logout */}
       <div className="ml-auto flex items-center">
         <button
-          className="flex items-center gap-1 hover:text-gray-200 transition"
+          className="flex items-center gap-1 hover:text-gray-200 transition cursor-pointer hover:underline"
           onClick={() => setShowConfirm(true)}
         >
           <MdLogout className="text-2xl" />
-          <span className="xl:flex hidden ">Cerrar Sesión</span>
+          <span className="xl:flex hidden hover:underline cursor-pointer">
+            Cerrar Sesión
+          </span>
         </button>
       </div>
 

@@ -1,26 +1,20 @@
+import withPWA from "next-pwa";
+import runtimeCaching from "next-pwa/cache";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  reactStrictMode: true, // Detecta prácticas inseguras en React
-  swcMinify: true, // Compilación más rápida y ligera
-
+  reactStrictMode: true,
+  swcMinify: true,
   images: {
     remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "api.qrserver.com", // ✅ para tus QR remotos
-      },
-      {
-        protocol: "http",
-        hostname: "localhost", // ✅ si mostrás imágenes generadas en tu API local
-      },
+      { protocol: "http", hostname: "localhost" }, // QR locales
+      { protocol: "https", hostname: "api.qrserver.com" }, // QR externos
     ],
   },
-
   async headers() {
     return [
       {
-        source: "/:path*", // Todas las rutas
+        source: "/:path*", // todas las rutas
         headers: [
           { key: "X-Frame-Options", value: "DENY" },
           { key: "X-Content-Type-Options", value: "nosniff" },
@@ -35,4 +29,38 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Configuración específica de PWA
+const pwaConfig = {
+  dest: "public", // obligatorio
+  disable: process.env.NODE_ENV === "development", // deshabilitado en dev
+  register: true,
+  skipWaiting: true,
+  runtimeCaching: [
+    // Cachear página /abonos/:id
+    {
+      urlPattern: /^\/abonos\/\d+$/,
+      handler: "NetworkFirst",
+      options: {
+        cacheName: "abonos-cache",
+        expiration: { maxEntries: 50, maxAgeSeconds: 24 * 60 * 60 }, // 1 día
+      },
+    },
+    // Cachear QR generados
+    {
+      urlPattern: /^\/qrs\/.*\.png$/,
+      handler: "CacheFirst",
+      options: {
+        cacheName: "qr-cache",
+        expiration: { maxEntries: 100, maxAgeSeconds: 7 * 24 * 60 * 60 }, // 7 días
+      },
+    },
+    // Mantener cache estándar de assets (JS, CSS, etc.)
+    ...runtimeCaching,
+  ],
+};
+
+// Exportamos combinando NextConfig + PWAConfig
+export default withPWA({
+  ...nextConfig,
+  ...pwaConfig,
+});
