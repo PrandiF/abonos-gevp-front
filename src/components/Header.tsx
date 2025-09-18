@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
   };
 
   return (
-    <header className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-white shadow-md px-4 sm:px-8 py-4 flex items-center relative">
+    <header className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-white shadow-md px-5 sm:px-8 py-4 flex items-center relative">
       {/* Left: Mobile Hamburger / Desktop Menu */}
       <div className="flex items-center gap-4">
         {/* Mobile Hamburger */}

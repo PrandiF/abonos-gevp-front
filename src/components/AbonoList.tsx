@@ -153,42 +153,55 @@ export default function ListarAbonos() {
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
-                      {abonosFiltrados.map((abono) => (
-                        <tr
-                          key={abono.id}
-                          className="hover:bg-blue-50 transition"
-                        >
-                          <td className="px-2 xl:px-4 py-3">{abono.nombre}</td>
-                          <td className="px-2 xl:px-4 py-3">{abono.dni}</td>
-                          <td className="px-2 xl:px-4 py-3">{abono.vence}</td>
-                          <td className="hidden xl:table-cell px-2 xl:px-4 py-3">
-                            <Link href={`/abonos/${abono.id}`}>
-                              <button className="text-blue-500 hover:underline cursor-pointer">
-                                Ver Abono Digital
+                      {abonosFiltrados.length > 0 ? (
+                        abonosFiltrados.map((abono) => (
+                          <tr
+                            key={abono.id}
+                            className="hover:bg-blue-50 transition"
+                          >
+                            <td className="px-2 xl:px-4 py-3">
+                              {abono.nombre}
+                            </td>
+                            <td className="px-2 xl:px-4 py-3">{abono.dni}</td>
+                            <td className="px-2 xl:px-4 py-3">{abono.vence}</td>
+                            <td className="hidden xl:table-cell px-2 xl:px-4 py-3">
+                              <Link href={`/abonos/${abono.id}`}>
+                                <button className="text-blue-500 hover:underline cursor-pointer">
+                                  Ver Abono Digital
+                                </button>
+                              </Link>
+                            </td>
+                            <td className="px-2 xl:px-4 py-3 flex gap-2 items-center relative">
+                              <button
+                                onClick={() => handleCopiar(abono.id)}
+                                className="cursor-pointer xl:bg-gradient-to-r from-blue-500 to-cyan-400 xl:text-white text-blue-500 xl:px-3 xl:py-2 xl:rounded-lg text-sm font-medium xl:hover:from-blue-600 xl:hover:to-cyan-500 hover:underline transition relative flex items-center justify-center my-auto h-full"
+                              >
+                                Copiar
+                                {copiado === abono.id && (
+                                  <span className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg z-20 w-fit">
+                                    Copiado correctamente!
+                                  </span>
+                                )}
                               </button>
-                            </Link>
-                          </td>
-                          <td className="px-2 xl:px-4 py-3 flex gap-2 items-center relative">
-                            <button
-                              onClick={() => handleCopiar(abono.id)}
-                              className="cursor-pointer xl:bg-gradient-to-r from-blue-500 to-cyan-400 xl:text-white text-blue-500 xl:px-3 xl:py-2 xl:rounded-lg text-sm font-medium xl:hover:from-blue-600 xl:hover:to-cyan-500 hover:underline transition relative flex items-center justify-center my-auto h-full"
-                            >
-                              Copiar
-                              {copiado === abono.id && (
-                                <span className="absolute -top-6 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded shadow-lg z-20 w-fit">
-                                  Copiado correctamente!
-                                </span>
-                              )}
-                            </button>
-                            <button
-                              onClick={() => setAbonoAEliminar(abono)}
-                              className="text-red-500 hover:text-red-700 cursor-pointer absolute right-8 xl:flex hidden"
-                            >
-                              <Trash2 className="w-5 h-5" />
-                            </button>
+                              <button
+                                onClick={() => setAbonoAEliminar(abono)}
+                                className="text-red-500 hover:text-red-700 cursor-pointer absolute right-8 xl:flex hidden"
+                              >
+                                <Trash2 className="w-5 h-5" />
+                              </button>
+                            </td>
+                          </tr>
+                        ))
+                      ) : (
+                        <tr>
+                          <td
+                            colSpan={5}
+                            className="text-center py-6 text-gray-500 font-medium"
+                          >
+                            No existen abonos
                           </td>
                         </tr>
-                      ))}
+                      )}
                     </tbody>
                   </table>
                 </div>

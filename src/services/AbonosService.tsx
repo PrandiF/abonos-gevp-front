@@ -32,11 +32,11 @@ export const viewAbonos = async () => {
 export const viewAbonoById = async (id: number) => {
   try {
     const res = await axios.get(`${API_URL}/${id}`, { withCredentials: true });
-    console.log("Abono:", res.data); // 👈 debería ya traer { id, nombre, dni, vence, qrCode }
-    return res.data; // ✅ devolvemos directamente el abono completo
+    console.log("Abono:", res.data); // 👈 ver qué trae realmente
+    return res.data || null; // ✅ nunca undefined
   } catch (error) {
     console.error("View Abono error:", error);
-    throw error;
+    return null; // si falla, devolvemos null
   }
 };
 export const deleteAbonoById = async (id: number) => {

@@ -25,7 +25,12 @@ export default function NuevoAbono() {
       AOS.init({ once: true }); // 'once: true' evita animaciones repetidas al hacer scroll
     }
   }, []);
-
+  useEffect(() => {
+    if (mensaje) {
+      const timer = setTimeout(() => setMensaje(""), 3000);
+      return () => clearTimeout(timer); // limpiar si se desmonta o cambia
+    }
+  }, [mensaje]);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMensaje(""); // limpiar mensaje previo
