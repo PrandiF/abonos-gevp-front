@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Trash2 } from "lucide-react";
 import Confirmation from "./ConfirmationModal";
-import { MdSearch } from "react-icons/md";
+import { MdArrowBack, MdSearch } from "react-icons/md";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useRouter } from "next/navigation";
@@ -93,12 +93,13 @@ export default function ListarAbonos() {
           <main className="flex-1 flex flex-col items-center justify-start p-6 relative gap-6 w-full">
             <button
               onClick={() => router.back()}
-              className="absolute top-6 left-6 text-blue-600 font-medium hover:underline flex items-center gap-1 cursor-pointer"
+              className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-md text-cyan-600 cursor-pointer font-medium rounded-lg shadow-sm hover:scale-105 transition-all duration-700 ease-in-out"
               data-aos="fade"
               data-aos-duration="1200"
               data-aos-delay="300"
             >
-              ← Volver
+              <MdArrowBack className="text-lg" />
+              Volver
             </button>
 
             <div

@@ -1,11 +1,17 @@
 "use client";
 import React from "react";
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from "react-icons/fa";
 
 function Footer() {
   return (
-    <div className="w-full bg-gray-400 text-white p-4 text-center">
-      <p>© 2023 Abonos GEVP. Todos los derechos reservados.</p>
-    </div>
+    <footer className="w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-white p-6 flex flex-col sm:flex-row items-center gap-4 shadow-md justify-center">
+      {/* Texto */}
+      <p className="text-sm sm:text-base font-medium">
+        © 2025 Abonos GEVP. Todos los derechos reservados.
+      </p>
+
+      {/* Redes Sociales */}
+    </footer>
   );
 }
 
