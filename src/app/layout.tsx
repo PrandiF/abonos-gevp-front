@@ -32,7 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-100 text-gray-800 h-screen flex flex-col`}
       >
         <AuthInitializer />
-        <main className="flex-1 flex items-center justify-center">
+        <main className="flex-1 flex items-start justify-center">
           {children}
         </main>
       </body>

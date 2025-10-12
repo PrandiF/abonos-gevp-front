@@ -14,13 +14,17 @@ import { useAuthStore } from "../store/userAuthStore";
 import AccesoDenegado from "./AccesoDenegado";
 import Header from "./Header";
 import Footer from "./Footer";
-import { createAbono } from "../services/AbonosService";
+import { createAbono, getAsientosOcupados } from "../services/AbonosService";
+import SeatSelectorModal from "./ModalSelectorAsientos";
 
 export default function NuevoAbono() {
   const [nombre, setNombre] = useState("");
   const [dni, setDni] = useState("");
   const [vence, setVence] = useState(""); // sigue siendo string "yyyy-mm-dd"
   const [mensaje, setMensaje] = useState("");
+  const [asiento, setAsiento] = useState<number | "">("");
+  const [asientosDisponibles, setAsientosDisponibles] = useState<number[]>([]);
+  const [modalOpen, setModalOpen] = useState(false);
   const { isLoggedIn } = useAuthStore();
 
   const router = useRouter();
@@ -38,17 +42,34 @@ export default function NuevoAbono() {
     }
   }, [mensaje]);
 
+  useEffect(() => {
+    const fetchAsientos = async () => {
+      if (!vence) return;
+
+      const ocupados = await getAsientosOcupados(vence);
+      const disponibles = Array.from({ length: 300 }, (_, i) => i + 1).filter(
+        (num) => !ocupados.includes(num)
+      );
+
+      setAsientosDisponibles(disponibles);
+      setAsiento(""); // reset si cambia la fecha
+    };
+
+    fetchAsientos();
+  }, [vence]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMensaje("");
 
     try {
       // 👈 enviamos vencimiento como string directamente
-      const res = await createAbono(nombre, dni, vence);
+      const res = await createAbono(nombre, dni, vence, asiento);
       setMensaje("Abono creado correctamente ✅");
       setNombre("");
       setDni("");
       setVence("");
+      setAsiento("");
       console.log("Abono creado:", res);
     } catch (err) {
       console.error(err);
@@ -137,6 +158,36 @@ export default function NuevoAbono() {
                     required
                   />
                 </div>
+                <div className="relative">
+                  <select
+                    value={asiento}
+                    onChange={(e) => setAsiento(Number(e.target.value))}
+                    className="xl:hidden w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required
+                    disabled={!vence}
+                  >
+                    <option value="">-- Seleccionar asiento --</option>
+                    {asientosDisponibles.map((num) => (
+                      <option key={num} value={num}>
+                        {num}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="relative xl:flex hidden">
+                  <button
+                    type="button"
+                    onClick={() => vence && setModalOpen(true)}
+                    disabled={!vence}
+                    className={`w-full p-3 border border-gray-300 rounded-lg text-left transition ${
+                      vence
+                        ? "hover:ring-2 hover:ring-blue-400 cursor-pointer"
+                        : "opacity-50 cursor-not-allowed"
+                    }`}
+                  >
+                    {asiento ? `Asiento ${asiento}` : "Seleccionar asiento"}
+                  </button>
+                </div>
 
                 <button
                   type="submit"
@@ -144,6 +195,14 @@ export default function NuevoAbono() {
                 >
                   Crear Abono
                 </button>
+
+                <SeatSelectorModal
+                  isOpen={modalOpen}
+                  onClose={() => setModalOpen(false)}
+                  onSelect={(num) => setAsiento(num)}
+                  fecha={vence}
+                  getAsientosOcupados={getAsientosOcupados}
+                />
               </form>
             </div>
           </main>

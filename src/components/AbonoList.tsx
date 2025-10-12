@@ -20,6 +20,7 @@ type Abono = {
   dni: string;
   vence: string;
   qrCode: string;
+  asiento?: number;
 };
 
 export default function ListarAbonos() {
@@ -142,16 +143,19 @@ export default function ListarAbonos() {
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-blue-50 sticky top-0 z-10">
                       <tr>
-                        <th className="px-2 xl:px-4 py-2 text-left text-sm font-semibold text-blue-900">
+                        <th className="px-2 xl:px-4 py-2 text-center text-sm font-semibold text-blue-900">
                           Nombre
                         </th>
-                        <th className="px-2 xl:px-4 py-2 text-left text-sm font-semibold text-blue-900">
+                        <th className="px-2 xl:px-4 py-2 text-center text-sm font-semibold text-blue-900">
                           DNI
                         </th>
-                        <th className="px-2 xl:px-4 py-2 text-left text-sm font-semibold text-blue-900">
+                        <th className="px-2 xl:px-4 py-2 text-center text-sm font-semibold text-blue-900">
                           Vence
                         </th>
-                        <th className="px-2 xl:px-4 py-2 text-left text-sm font-semibold text-blue-900 hidden xl:table-cell">
+                        <th className="px-2 xl:px-4 py-2 text-center text-sm font-semibold text-blue-900">
+                          Asiento
+                        </th>
+                        <th className="px-2 xl:px-4 py-2 text-center text-sm font-semibold text-blue-900 hidden xl:table-cell">
                           Abono Digital
                         </th>
                         <th className="px-2 xl:px-4 py-2 text-left text-sm font-semibold text-blue-900">
@@ -166,21 +170,26 @@ export default function ListarAbonos() {
                             key={abono.id}
                             className="hover:bg-blue-50 transition"
                           >
-                            <td className="px-2 xl:px-4 py-3">
+                            <td className="px-2 xl:px-4 py-3 text-center">
                               {abono.nombre}
                             </td>
-                            <td className="px-2 xl:px-4 py-3">{abono.dni}</td>
-                            <td className="px-2 xl:px-4 py-3">
+                            <td className="px-2 xl:px-4 py-3 text-center">
+                              {abono.dni}
+                            </td>
+                            <td className="px-2 xl:px-4 py-3 text-center">
                               {formatDate(abono.vence)}
                             </td>
-                            <td className="hidden xl:table-cell px-2 xl:px-4 py-3">
+                            <td className="px-2 xl:px-4 py-3 text-center">
+                              {abono.asiento}
+                            </td>
+                            <td className="hidden xl:table-cell px-2 xl:px-4 py-3 text-center">
                               <Link href={`/abonos/${abono.id}`}>
                                 <button className="text-blue-500 hover:underline cursor-pointer">
                                   Ver Abono Digital
                                 </button>
                               </Link>
                             </td>
-                            <td className="px-2 xl:px-4 py-3 flex gap-2 items-center relative">
+                            <td className="px-2 xl:px-4 py-3  flex gap-2 items-center relative">
                               <button
                                 onClick={() => handleCopiar(abono.id)}
                                 className="cursor-pointer xl:bg-gradient-to-r from-blue-500 to-cyan-400 xl:text-white text-blue-500 xl:px-3 xl:py-2 xl:rounded-lg text-sm font-medium xl:hover:from-blue-600 xl:hover:to-cyan-500 hover:underline transition relative flex items-center justify-center my-auto h-full"

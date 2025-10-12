@@ -32,3 +32,10 @@ body {
 .scrollbar-none::-webkit-scrollbar {
   display: none; /* Chrome, Safari y Opera */
 }
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important; /* Chrome/Safari */
+    print-color-adjust: exact !important; /* Otros */
+  }
+}

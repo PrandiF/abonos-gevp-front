@@ -5,12 +5,13 @@ const API_URL = "http://localhost:5001/api/abonos"; // ajusta si tu backend usa 
 export const createAbono = async (
   nombre: string,
   dni: string,
-  vence: string
+  vence: string,
+  asiento: number | string
 ) => {
   try {
     const res = await axios.post(
       `${API_URL}/`,
-      { nombre, dni, vence },
+      { nombre, dni, vence, asiento },
       { withCredentials: true }
     );
 
@@ -86,5 +87,38 @@ export const getFilterAbono = async (filter: FilterProps) => {
   } catch (error) {
     console.error("Error al filtrar el/los abono/s:", error);
     throw error;
+  }
+};
+
+// Obtiene los asientos ocupados para una fecha específica
+export const getAsientosOcupados = async (vence: string) => {
+  if (!vence) return []; // no llamar al backend si no hay fecha
+
+  try {
+    console.log("Enviando fecha:", vence);
+    const res = await axios.get(`${API_URL}/asientos-ocupados`, {
+      params: { vence },
+      withCredentials: true,
+    });
+
+    // verificar que sea un array de números
+    if (!Array.isArray(res.data)) {
+      console.error("Respuesta inesperada:", res.data);
+      return [];
+    }
+
+    const asientos: number[] = res.data.map((a: any) => Number(a));
+    console.log("Asientos ocupados:", asientos);
+    return asientos;
+  } catch (error: any) {
+    console.error("Error al obtener asientos ocupados (detalle):", error);
+    if (error.response) {
+      console.error("📡 Error de respuesta:", error.response.data);
+    } else if (error.request) {
+      console.error("🚫 No hubo respuesta del servidor:", error.request);
+    } else {
+      console.error("⚙️ Error al preparar la solicitud:", error.message);
+    }
+    throw error; // para que el frontend no se rompa
   }
 };
