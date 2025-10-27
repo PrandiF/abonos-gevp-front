@@ -173,13 +173,12 @@ export default function NuevoAbono() {
                       </option>
                     ))}
                   </select>
-                </div>
-                <div className="relative xl:flex hidden">
+
                   <button
                     type="button"
                     onClick={() => vence && setModalOpen(true)}
                     disabled={!vence}
-                    className={`w-full p-3 border border-gray-300 rounded-lg text-left transition ${
+                    className={`hidden xl:flex w-full p-3 border border-gray-300 rounded-lg text-left transition ${
                       vence
                         ? "hover:ring-2 hover:ring-blue-400 cursor-pointer"
                         : "opacity-50 cursor-not-allowed"

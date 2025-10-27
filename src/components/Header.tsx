@@ -40,21 +40,21 @@ const Header: React.FC<HeaderProps> = ({ onLogout }) => {
           onClick={() => router.push("/home")}
         >
           Inicio
-          <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+          <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-600 group-hover:w-full"></span>
         </button>
         <button
           className="relative group px-2 py-1 transition-colors duration-300 hover:text-gray-200 cursor-pointer"
           onClick={() => router.push("/abonos/nuevo")}
         >
           Crear Abono
-          <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+          <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-600 group-hover:w-full"></span>
         </button>
         <button
           className="relative group px-2 py-1 transition-colors duration-300 hover:text-gray-200 cursor-pointer"
           onClick={() => router.push("/abonos/listar")}
         >
           Todos los Abonos
-          <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+          <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-600 group-hover:w-full"></span>
         </button>
       </div>
 

@@ -79,7 +79,7 @@ export default function AbonoDigital() {
           <div className="w-full xl:flex hidden justify-center my-4 print:hidden">
             <button
               onClick={() => window.print()}
-              className="px-4 py-2 bg-sky-700 text-white font-semibold rounded-lg shadow-md hover:bg-sky-800 transition cursor-pointer"
+              className="px-4 py-2 bg-sky-700 text-white font-semibold rounded-lg shadow-md hover:bg-sky-800  transition-all cursor-pointer"
             >
               Imprimir carnet
             </button>

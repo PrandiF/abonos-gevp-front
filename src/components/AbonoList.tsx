@@ -94,7 +94,7 @@ export default function ListarAbonos() {
           <main className="flex-1 flex flex-col items-center justify-start p-6 relative gap-6 w-full">
             <button
               onClick={() => router.back()}
-              className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-md text-cyan-600 cursor-pointer font-medium rounded-lg shadow-sm hover:scale-105 transition-all duration-700 ease-in-out"
+              className="absolute top-6 left-6 flex items-center gap-2 px-3 py-1.5 bg-white/20 backdrop-blur-md text-cyan-600 cursor-pointer font-medium rounded-lg shadow-sm hover:scale-105 transition-all duration-500 ease-in-out"
               data-aos="fade"
               data-aos-duration="1200"
               data-aos-delay="300"
